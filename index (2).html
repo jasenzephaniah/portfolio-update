@@ -1,0 +1,430 @@
+<title>JD Zephaniah Portfolio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: an instrument-cluster spec sheet. Header readout, then project rows laid out like a vehicle spec table. */
+:root {
+  --bg: #f2ead8;
+  --surface: #faf5e8;
+  --fg: #111111;
+  --muted: #5e5849;
+  --line: #d3c8ad;
+  --accent: #111111;
+  --accent-soft: #e8dec4;
+  --f-display: "Archivo", "Arial Narrow", Arial, sans-serif;
+  --f-body: "Archivo", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111111; --surface: #1b1a17; --fg: #f2ead8; --muted: #a39b88;
+    --line: #302d26; --accent: #f2ead8; --accent-soft: #26231d; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111111; --surface: #1b1a17; --fg: #f2ead8; --muted: #a39b88;
+  --line: #302d26; --accent: #f2ead8; --accent-soft: #26231d; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: var(--f-body); font-size: 16px; line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0;
+}
+.wrap { max-width: 1040px; margin: 0 auto; }
+a { color: var(--accent); text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.mono { font-family: var(--f-mono); }
+.label { font-family: var(--f-mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+
+header { padding-block: 40px 28px; border-bottom: 2px solid var(--fg); }
+.kicker { display: flex; flex-wrap: wrap; gap: 8px 20px; justify-content: space-between; }
+h1 {
+  font-family: var(--f-display); font-stretch: 70%; font-weight: 800;
+  font-size: clamp(3.2rem, 13vw, 8rem); line-height: .9; letter-spacing: -.01em;
+  text-transform: uppercase; margin: 20px 0 16px; text-wrap: balance;
+}
+.lede { max-width: 62ch; font-size: 1.125rem; color: var(--fg); margin: 0; }
+
+.readout { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); border-bottom: 1px solid var(--line); }
+.readout div { padding: 18px 16px 18px 0; border-right: 1px solid var(--line); min-width: 0; }
+.readout div + div { padding-left: 16px; }
+.readout div:last-child { border-right: 0; }
+.readout b { display: block; font-family: var(--f-display); font-stretch: 75%; font-weight: 700; font-size: 1.6rem; line-height: 1.15; margin-top: 4px; overflow-wrap: anywhere; }
+
+section { padding-block: 44px 8px; }
+h2 { font-family: var(--f-display); font-stretch: 75%; font-weight: 800; text-transform: uppercase; font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1; margin: 6px 0 24px; text-wrap: balance; }
+
+.spec { background: var(--surface); border: 1px solid var(--line); margin-bottom: 16px; display: grid; grid-template-columns: 150px 1fr; }
+.spec .id { padding: 20px; border-right: 1px solid var(--line); display: flex; flex-direction: column; gap: 10px; align-content: start; }
+.spec .id .tag { font-family: var(--f-mono); font-size: 12px; color: var(--accent); }
+.spec .body { padding: 20px 22px 22px; min-width: 0; }
+.spec h3 { font-family: var(--f-display); font-stretch: 80%; font-weight: 750; font-size: 1.6rem; line-height: 1.1; margin: 0 0 8px; text-wrap: balance; }
+.spec p { margin: 0 0 12px; max-width: 66ch; }
+.rows { display: grid; grid-template-columns: 1fr 1fr; gap: 0 28px; border-top: 1px solid var(--line); margin-top: 14px; }
+.rows dl { margin: 0; padding: 12px 0; border-bottom: 1px solid var(--line); min-width: 0; }
+.rows dt { font-family: var(--f-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.rows dd { margin: 4px 0 0; font-size: .95rem; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+.chip { font-family: var(--f-mono); font-size: 12px; padding: 3px 9px; background: var(--accent-soft); color: var(--fg); border: 1px solid var(--line); }
+
+.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.cell { background: var(--surface); border: 1px solid var(--line); padding: 20px; min-width: 0; }
+.cell h3 { font-family: var(--f-display); font-stretch: 80%; font-weight: 750; font-size: 1.25rem; margin: 0 0 8px; }
+.cell p, .cell li { margin: 0; color: var(--fg); }
+.cell ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; }
+
+.xp { border-top: 1px solid var(--line); }
+.xp > div { display: grid; grid-template-columns: 150px 1fr; gap: 8px 20px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.xp .when { font-family: var(--f-mono); font-size: 13px; color: var(--muted); }
+.xp strong { font-weight: 700; }
+.xp span { display: block; min-width: 0; }
+
+.contact { background: var(--fg); color: var(--bg); padding: 28px 24px; margin-top: 44px; display: grid; gap: 14px; }
+.contact h2 { margin: 0; color: var(--bg); }
+.contact a { color: var(--bg); font-family: var(--f-mono); overflow-wrap: anywhere; }
+.contact .links { display: flex; flex-wrap: wrap; gap: 10px 28px; align-items: center; }
+.copy { font-family: var(--f-mono); font-size: 12px; background: transparent; color: var(--bg); border: 1px solid var(--bg); padding: 4px 10px; cursor: pointer; }
+footer { padding-block: 28px 40px; color: var(--muted); font-size: 13px; }
+
+.theme { font-family: var(--f-mono); font-size: 12px; background: transparent; color: var(--fg); border: 1px solid var(--line); padding: 4px 10px; cursor: pointer; }
+.theme:hover, .copy:hover, .btn:hover { border-color: var(--accent); }
+.btn { font-family: var(--f-mono); font-size: 12px; background: var(--surface); color: var(--fg); border: 1px solid var(--line); padding: 7px 12px; cursor: pointer; }
+.btn[aria-pressed="true"], .btn.on { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.btn:focus-visible, .theme:focus-visible, .copy:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+.demo { background: var(--surface); border: 1px solid var(--line); padding: 20px; }
+.demo-top { display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: space-between; align-items: end; margin-bottom: 14px; }
+.demo-vals { display: flex; flex-wrap: wrap; gap: 8px 28px; }
+.demo-vals b { display: block; font-family: var(--f-display); font-stretch: 75%; font-weight: 750; font-size: 2rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.demo-ctl { display: flex; flex-wrap: wrap; gap: 6px; }
+.chart-box { overflow-x: auto; }
+svg.chart { display: block; width: 100%; min-width: 320px; height: auto; }
+.chart .grid { stroke: var(--line); stroke-width: 1; }
+.chart .ax { fill: var(--muted); font-family: var(--f-mono); font-size: 11px; }
+.chart .meas { fill: none; stroke: var(--muted); stroke-width: 2; }
+.chart .pred { fill: none; stroke: var(--accent); stroke-width: 2.5; stroke-dasharray: 6 5; }
+.chart .now { stroke: var(--muted); stroke-width: 1; stroke-dasharray: 2 4; }
+.chart .dot { fill: var(--accent); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 20px; margin-top: 10px; font-size: 13px; color: var(--muted); }
+.legend i { display: inline-block; width: 22px; height: 0; border-top: 2px solid var(--muted); vertical-align: middle; margin-right: 6px; }
+.legend i.p { border-top: 2.5px dashed var(--accent); }
+
+.filters { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+.spec.hide { display: none; }
+.spec .toggle { margin-top: 14px; }
+.js .spec:not(.open) .rows, .js .spec:not(.open) .chips { display: none; }
+.skill { cursor: pointer; text-align: left; font: inherit; color: inherit; }
+.cell.sel { border-color: var(--accent); }
+.spec.feature { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.spec.feature .id { border-right-color: var(--muted); }
+.spec.feature .tag, .spec.feature .label { color: var(--bg); }
+.spec.feature h3 { font-size: clamp(2rem, 6vw, 3rem); line-height: 1; }
+.spec.feature p { font-size: 1.1rem; }
+.spec.feature .rows, .spec.feature .rows dl { border-color: var(--muted); }
+.spec.feature .rows dt { color: var(--line); }
+.spec.feature .toggle { background: transparent; color: var(--bg); border-color: var(--bg); }
+.flow { display: flex; flex-wrap: wrap; gap: 8px; align-items: stretch; margin: 16px 0 4px; }
+.flow span { flex: 1 1 140px; min-width: 0; padding: 10px 12px; border: 1px solid var(--muted); font-family: var(--f-mono); font-size: 13px; }
+.flow span b { display: block; font-weight: 500; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--line); margin-bottom: 2px; }
+@media (max-width: 640px) { .spec.feature .id { border-bottom-color: var(--muted); } }
+.cell.lead { grid-column: span 2; background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.cell.lead.sel { outline: 2px solid var(--accent); outline-offset: 2px; }
+.cell.lead li, .cell.lead p { color: var(--bg); }
+@media (max-width: 640px) { .cell.lead { grid-column: auto; } }
+.hint { color: var(--muted); font-size: 14px; margin: 0 0 14px; }
+
+@media (max-width: 640px) {
+  .spec, .xp > div { grid-template-columns: 1fr; }
+  .spec .id { border-right: 0; border-bottom: 1px solid var(--line); flex-direction: row; justify-content: space-between; }
+  .rows { grid-template-columns: 1fr; }
+  .readout div, .readout div + div { padding-left: 0; border-right: 0; border-bottom: 1px solid var(--line); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .spec { transition: border-color .15s; }
+  .spec:hover { border-color: var(--accent); }
+}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="kicker">
+      <span class="label">Portfolio</span>
+      <span><span class="label">AI · Interface design</span> <button class="theme" id="theme" type="button">Theme: auto</button></span>
+    </div>
+    <h1>W. Jasen Zephaniah</h1>
+    <p class="lede">I build AI-assisted tools and the interfaces around them: curriculum generators, prediction dashboards and web apps that turn model output into something people can use. Python is my main language, and I take projects from the model to the screen.</p>
+  </header>
+
+  <div class="readout" aria-label="Summary">
+    <div><span class="label">Studying</span><b>B.Tech CSE, SRM Trichy</b></div>
+    <div><span class="label">Graduating</span><b>2027</b></div>
+    <div><span class="label">Focus</span><b>AI, Web</b></div>
+  </div>
+
+  <section id="demo">
+    <span class="label">Try it</span>
+    <h2>Prediction dashboard sketch</h2>
+    <p class="hint">An illustrative simulation of an AI-assisted dashboard: live readings on the left, a model's short-term prediction continuing past the now line. The numbers are generated in your browser, not real sensor data.</p>
+    <div class="demo">
+      <div class="demo-top">
+        <div class="demo-vals">
+          <div><span class="label" id="lbl-m">Measured</span><b id="v-m">--</b></div>
+          <div><span class="label">Predicted in 10 s</span><b id="v-p" style="color:var(--accent)">--</b></div>
+        </div>
+        <div class="demo-ctl" role="group" aria-label="Demo controls">
+          <button class="btn" type="button" data-sensor="temp" aria-pressed="true">Temperature</button>
+          <button class="btn" type="button" data-sensor="hum" aria-pressed="false">Humidity</button>
+          <button class="btn" type="button" data-sensor="lux" aria-pressed="false">Light</button>
+          <button class="btn on" type="button" id="play">Pause</button>
+        </div>
+      </div>
+      <div class="chart-box">
+        <svg class="chart" id="chart" viewBox="0 0 640 220" role="img" aria-label="Line chart of simulated measured and predicted sensor values"></svg>
+      </div>
+      <div class="legend"><span><i></i>Measured</span><span><i class="p"></i>Predicted</span><span>Window: last 40 s, prediction: next 10 s</span></div>
+    </div>
+  </section>
+
+  <section id="work">
+    <span class="label">Selected work</span>
+    <h2>Projects</h2>
+    <div class="filters" role="group" aria-label="Filter projects">
+      <button class="btn" type="button" data-f="all" aria-pressed="true">All</button>
+      <button class="btn" type="button" data-f="ai" aria-pressed="false">AI</button>
+      <button class="btn" type="button" data-f="web" aria-pressed="false">Web</button>
+      <button class="btn" type="button" data-f="sim" aria-pressed="false">Simulation</button>
+    </div>
+
+    <article class="spec feature">
+      <div class="id"><span class="tag">P-01</span><span class="label">AI tool · UX</span><span class="chip">Featured</span></div>
+      <div class="body">
+        <h3>LearnExt</h3>
+        <p>An AI curriculum generation tool. A learner describes a goal and the tool turns it into a structured learning path.</p>
+        <div class="flow" aria-label="How LearnExt works"><span><b>Input</b>A learning goal</span><span><b>AI</b>Generates the curriculum</span><span><b>Output</b>A structured path</span></div>
+        <div class="rows">
+          <dl><dt>Design problem</dt><dd>Turn open-ended model output into something a person can scan and follow.</dd></dl>
+          <dl><dt>Takeaway</dt><dd>Generated output needs structure before it becomes a usable interface.</dd></dl>
+        </div>
+        <div class="chips"><span class="chip">Generative AI</span><span class="chip">Python</span><span class="chip">Web UI</span></div>
+      </div>
+    </article>
+
+    <article class="spec">
+      <div class="id"><span class="tag">P-02</span><span class="label">AI · Data</span></div>
+      <div class="body">
+        <h3>AI-Predicted Sensor Dashboard</h3>
+        <p>A live dashboard that shows sensor readings together with AI-predicted values, so the screen shows what is happening now and what the model expects next.</p>
+        <div class="rows">
+          <dl><dt>Design problem</dt><dd>Show measured and predicted data side by side without confusing the two.</dd></dl>
+          <dl><dt>Takeaway</dt><dd>Real-time state plus prediction fits any live data source.</dd></dl>
+        </div>
+        <div class="chips"><span class="chip">ML</span><span class="chip">Python</span><span class="chip">Dashboard</span><span class="chip">Sensor data</span></div>
+      </div>
+    </article>
+
+    <article class="spec">
+      <div class="id"><span class="tag">P-03</span><span class="label">Simulation</span></div>
+      <div class="body">
+        <h3>BB84 Quantum Key Distribution Simulator</h3>
+        <p>A simulator for the BB84 key exchange protocol that lets a viewer step through how qubits are sent, measured and reconciled into a shared key.</p>
+        <div class="rows">
+          <dl><dt>Design problem</dt><dd>Make an abstract, multi-step protocol legible to someone seeing it for the first time.</dd></dl>
+          <dl><dt>Takeaway</dt><dd>Complex systems become approachable when each step can be seen.</dd></dl>
+        </div>
+        <div class="chips"><span class="chip">Python</span><span class="chip">Visualization</span></div>
+      </div>
+    </article>
+
+    <article class="spec">
+      <div class="id"><span class="tag">P-04</span><span class="label">Web</span></div>
+      <div class="body">
+        <h3>Personal portfolio site</h3>
+        <p>A dark, terminal-inspired site with a teal accent, an animated grid and scroll-triggered animation, built from my resume.</p>
+        <div class="chips"><span class="chip">Front-end</span><span class="chip">Motion</span></div>
+      </div>
+    </article>
+  </section>
+
+  <section id="skills">
+    <span class="label">What I bring</span>
+    <h2>Across the stack</h2>
+    <p class="hint">Select a skill to highlight the projects that use it.</p>
+    <div class="cols">
+      <div class="cell lead" data-skill="ai"><h3>AI-based design</h3><ul><li>AI/ML tooling in Python</li><li>Generative AI inside real products</li><li>Turning model output into usable screens</li><li>Showing predictions next to live data</li></ul></div>
+      <div class="cell" data-skill="web"><h3>UI / UX</h3><ul><li>Dashboards and data display</li><li>Interactive visualizations</li><li>Responsive front-end builds</li></ul></div>
+      <div class="cell" data-skill="iot"><h3>Hardware</h3><p>Comfortable with ESP32 and Arduino when a project needs real sensors.</p></div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <span class="label">Experience</span>
+    <h2>Where I have worked</h2>
+    <div class="xp">
+      <div><span class="when">Project developer intern</span><span><strong>NIT Trichy</strong><span>Built a real-time dashboard that displays AI-predicted sensor data from Arduino hardware.</span></span></div>
+      <div><span class="when">Web development</span><span><strong>HILIFE.AI</strong><span>Web development role.</span></span></div>
+    </div>
+  </section>
+
+  <div class="contact" id="contact">
+    <h2>Get in touch</h2>
+    <div class="links">
+      <a href="https://github.com/jasenzephaniah" target="_blank" rel="noopener">github.com/jasenzephaniah</a>
+      <a id="mail" href="mailto:jasenzephaniah11@gmail.com">jasenzephaniah11@gmail.com</a>
+      <button class="copy" id="copy" type="button">Copy email</button>
+    </div>
+  </div>
+  <footer>SRM Institute of Science and Technology, Tiruchirappalli · Class of 2027</footer>
+</div>
+
+<script>
+(function () {
+  document.documentElement.classList.add("js");
+  var root = document.documentElement;
+
+  /* Theme toggle: auto -> light -> dark */
+  var modes = ["auto", "light", "dark"], mi = 0, tb = document.getElementById("theme");
+  function applyTheme() {
+    if (modes[mi] === "auto") root.removeAttribute("data-theme"); else root.setAttribute("data-theme", modes[mi]);
+    tb.textContent = "Theme: " + modes[mi];
+  }
+  try { var s = localStorage.getItem("jd-theme"); if (s && modes.indexOf(s) > -1) mi = modes.indexOf(s); } catch (e) {}
+  applyTheme();
+  tb.addEventListener("click", function () {
+    mi = (mi + 1) % 3; applyTheme();
+    try { localStorage.setItem("jd-theme", modes[mi]); } catch (e) {}
+  });
+
+  /* Projects: categories, filter, expand */
+  var cats = { "P-01": "ai web", "P-02": "ai iot", "P-03": "ai sim", "P-04": "web" };
+  var specs = Array.prototype.slice.call(document.querySelectorAll(".spec"));
+  specs.forEach(function (el, i) {
+    var tag = el.querySelector(".tag").textContent.trim();
+    el.setAttribute("data-cat", cats[tag] || "");
+    if (el.querySelector(".rows") || el.querySelector(".chips")) {
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "btn toggle";
+      var body = el.querySelector(".body");
+      body.appendChild(b);
+      function sync() { var o = el.classList.contains("open"); b.textContent = o ? "Hide details" : "Show details"; b.setAttribute("aria-expanded", o); }
+      if (i === 0) el.classList.add("open");
+      sync();
+      b.addEventListener("click", function () { el.classList.toggle("open"); sync(); });
+    }
+  });
+  var fbs = document.querySelectorAll("[data-f]");
+  Array.prototype.forEach.call(fbs, function (b) {
+    b.addEventListener("click", function () {
+      var f = b.getAttribute("data-f");
+      Array.prototype.forEach.call(fbs, function (x) { x.setAttribute("aria-pressed", x === b); });
+      specs.forEach(function (el) {
+        var c = " " + el.getAttribute("data-cat") + " ";
+        el.classList.toggle("hide", f !== "all" && c.indexOf(" " + f + " ") < 0);
+      });
+    });
+  });
+
+  /* Skills: highlight matching projects */
+  var cells = document.querySelectorAll("[data-skill]");
+  Array.prototype.forEach.call(cells, function (c) {
+    c.setAttribute("role", "button"); c.setAttribute("tabindex", "0"); c.classList.add("skill");
+    function pick() {
+      var on = !c.classList.contains("sel");
+      Array.prototype.forEach.call(cells, function (x) { x.classList.remove("sel"); });
+      specs.forEach(function (el) { el.style.borderColor = ""; });
+      if (on) {
+        c.classList.add("sel");
+        var k = c.getAttribute("data-skill");
+        specs.forEach(function (el) {
+          if ((" " + el.getAttribute("data-cat") + " ").indexOf(" " + k + " ") > -1) el.style.borderColor = "var(--accent)";
+        });
+      }
+    }
+    c.addEventListener("click", pick);
+    c.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick(); } });
+  });
+
+  /* Sensor demo */
+  var NS = "http://www.w3.org/2000/svg";
+  var svg = document.getElementById("chart");
+  var W = 640, H = 220, L = 44, R = 12, T = 12, B = 26, N = 40, P = 10;
+  var sensors = {
+    temp: { name: "Temperature", unit: "°C", base: 28, amp: 4, min: 20, max: 36, f: function (t) { return 28 + 3.2 * Math.sin(t / 9) + 1.1 * Math.sin(t / 3.1); } },
+    hum:  { name: "Humidity", unit: "%RH", base: 55, amp: 12, min: 30, max: 80, f: function (t) { return 55 + 11 * Math.sin(t / 11 + 1) + 2 * Math.sin(t / 2.7); } },
+    lux:  { name: "Light", unit: "lux", base: 420, amp: 180, min: 150, max: 700, f: function (t) { return 420 + 160 * Math.sin(t / 13 + 2) + 30 * Math.sin(t / 3.3); } }
+  };
+  var cur = "temp", t = 0, data = [], running = true;
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduce) running = false;
+  function noise(k) { return Math.sin(k * 12.9898) * 0.5 + Math.sin(k * 78.233) * 0.5; }
+  function reading(k) { var s = sensors[cur]; return s.f(k) + noise(k) * s.amp * 0.08; }
+  function reset() { data = []; for (var i = N - 1; i >= 0; i--) data.push(reading(t - i)); }
+  function predict() {
+    /* Smooth the last few readings, then project the recent slope forward. */
+    var n = data.length, a = 0, c = 0, i;
+    for (i = n - 5; i < n; i++) a += data[i] / 5;
+    for (i = n - 10; i < n - 5; i++) c += data[i] / 5;
+    var slope = (a - c) / 5, out = [];
+    for (i = 1; i <= P; i++) out.push(a + slope * (i + 2) * 0.8);
+    return out;
+  }
+  function el(n, attrs, text) {
+    var e = document.createElementNS(NS, n);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    if (text != null) e.textContent = text;
+    return e;
+  }
+  function fmt(v) { var s = sensors[cur]; return (cur === "lux" ? Math.round(v) : v.toFixed(1)) + " " + s.unit; }
+  function draw() {
+    var s = sensors[cur], pr = predict(), total = N + P - 1;
+    var x = function (i) { return L + (i / total) * (W - L - R); };
+    var y = function (v) { return T + (1 - (v - s.min) / (s.max - s.min)) * (H - T - B); };
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    for (var g = 0; g <= 4; g++) {
+      var gv = s.min + (g / 4) * (s.max - s.min), gy = y(gv);
+      svg.appendChild(el("line", { "class": "grid", x1: L, x2: W - R, y1: gy, y2: gy }));
+      svg.appendChild(el("text", { "class": "ax", x: L - 6, y: gy + 4, "text-anchor": "end" }, Math.round(gv)));
+    }
+    svg.appendChild(el("text", { "class": "ax", x: L, y: H - 8 }, "-40 s"));
+    svg.appendChild(el("text", { "class": "ax", x: x(N - 1), y: H - 8, "text-anchor": "middle" }, "now"));
+    svg.appendChild(el("text", { "class": "ax", x: W - R, y: H - 8, "text-anchor": "end" }, "+10 s"));
+    svg.appendChild(el("line", { "class": "now", x1: x(N - 1), x2: x(N - 1), y1: T, y2: H - B }));
+    var d = "", i;
+    for (i = 0; i < data.length; i++) d += (i ? "L" : "M") + x(i).toFixed(1) + " " + y(data[i]).toFixed(1);
+    svg.appendChild(el("path", { "class": "meas", d: d }));
+    var dp = "M" + x(N - 1).toFixed(1) + " " + y(data[N - 1]).toFixed(1);
+    for (i = 0; i < pr.length; i++) dp += "L" + x(N + i).toFixed(1) + " " + y(Math.max(s.min, Math.min(s.max, pr[i]))).toFixed(1);
+    svg.appendChild(el("path", { "class": "pred", d: dp }));
+    svg.appendChild(el("circle", { "class": "dot", cx: x(N - 1), cy: y(data[N - 1]), r: 4.5 }));
+    document.getElementById("lbl-m").textContent = s.name + " (measured)";
+    document.getElementById("v-m").textContent = fmt(data[N - 1]);
+    document.getElementById("v-p").textContent = fmt(pr[P - 1]);
+  }
+  function tick() { t += 1; data.push(reading(t)); data.shift(); draw(); }
+  reset(); draw();
+  setInterval(function () { if (running && !document.hidden) tick(); }, 1000);
+  var pb = document.getElementById("play");
+  function syncPlay() { pb.textContent = running ? "Pause" : "Resume"; pb.classList.toggle("on", running); }
+  syncPlay();
+  pb.addEventListener("click", function () { running = !running; syncPlay(); });
+  var sbs = document.querySelectorAll("[data-sensor]");
+  Array.prototype.forEach.call(sbs, function (b) {
+    b.addEventListener("click", function () {
+      cur = b.getAttribute("data-sensor");
+      Array.prototype.forEach.call(sbs, function (x) { x.setAttribute("aria-pressed", x === b); });
+      reset(); draw();
+    });
+  });
+
+  var btn = document.getElementById("copy");
+  btn.addEventListener("click", function () {
+    var t = "jasenzephaniah11@gmail.com";
+    var done = function () { btn.textContent = "Copied"; setTimeout(function () { btn.textContent = "Copy email"; }, 1600); };
+    try { navigator.clipboard.writeText(t).then(done, function () { btn.textContent = "Select the address above"; }); }
+    catch (e) { btn.textContent = "Select the address above"; }
+  });
+})();
+</script>
